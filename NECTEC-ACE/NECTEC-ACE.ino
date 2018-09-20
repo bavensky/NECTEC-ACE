@@ -4,7 +4,7 @@
 unsigned long previousMillis = 0;
 const long interval = 1000;
 
-init timeCount = 0;
+int timeCount = 0;
 
 void setup() {
   Serial.begin(9600);
