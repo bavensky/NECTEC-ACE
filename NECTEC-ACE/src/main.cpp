@@ -89,6 +89,7 @@ void loop()
     }
     if (timeCount >= 25) {
       statusCar = false;
+      timeCount = 0;
     }
   }
   mqtt->loop();

@@ -14,7 +14,6 @@ extern uint32_t direction;
 extern int countEye;
 extern bool statusCar;
 
-
 void register_receive_hooks()
 {
   mqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void {
@@ -33,17 +32,15 @@ void register_receive_hooks()
     Serial.printf("cmd: %s\r\n", cmd.c_str());
     Serial.printf("payload: %s\r\n", payload.c_str());
 
-    if (cmd == "command")
+    if (payload == "START")
     {
-      if (payload == "START")
-      {
-        statusCar = true;
-      }
-      else if (payload == "STOP")
-      {
-        statusCar == false;
-      }
+      statusCar = true;
     }
+    else if (payload == "STOP")
+    {
+      statusCar == false;
+    }
+
     else if (cmd == "$/reboot")
     {
       ESP.restart();
