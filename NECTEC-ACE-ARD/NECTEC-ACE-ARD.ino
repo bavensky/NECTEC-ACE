@@ -72,7 +72,7 @@ void loop() {
 
   if (statusCar == true) {
 
-    Serial1.print(String(map(timeCount, 0, 25, 0, 900)) + "\n");
+    Serial1.print(String(map(timeCount, 0, 25, 0, 1000)) + "\n");
   }
 
   if (timeCount >= 25) {

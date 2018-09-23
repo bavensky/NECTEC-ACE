@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <HardwareSerial.h>
 
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
@@ -16,9 +17,11 @@
 #include "_receive.h"
 #include "_config.h"
 
+
 #define rxPin (16)
 #define txPin (17)
 
+HardwareSerial mySerial(1);
 MqttConnector *mqtt;
 
 int relayPin = 26;
@@ -28,7 +31,7 @@ int x, y;
 
 
 unsigned long previousMillis = 0;
-const long interval = 100;
+const long interval = 500;
 unsigned int timeCount = 0;
 bool statusCar = false;
 
@@ -41,8 +44,9 @@ void init_hardware()
 
   // serial port initialization
   Serial.begin(115200);
-  Serial1.begin(9600, SERIAL_8N1, rxPin, txPin, false);
+  mySerial.begin(9600, SERIAL_8N1, rxPin, txPin, false);
   delay(10);
+  mySerial.print("0\n");
   Serial.println();
   Serial.println("Starting...");
 }
@@ -85,9 +89,9 @@ void loop()
       Serial.print(millis() / 1000);
       Serial.print("  ");
       Serial.println(timeCount);
-      Serial1.print(String(map(timeCount, 0, 25, 0, 900)) + "\n");
+      mySerial.print(String(map(timeCount, 0, 50, 0, 1000)) + "\n");
     }
-    if (timeCount >= 25) {
+    if (timeCount >= 50) {
       statusCar = false;
       timeCount = 0;
     }
