@@ -17,4 +17,3 @@ int    MQTT_PORT        = 1883;
 int PUBLISH_EVERY       = 1L * 1000;
 int MQTT_CONNECT_TIMEOUT= 120; 
 
-// mosquitto_sub -t "/nectecAce2018/gearname/#" -h gb.netpie.io -i qcvtDFMNts7xAi9n -u "1JGmU67tQSxQTK6" -P "NIURSS6xMbHjoFtWJKU+zYMBu5I=" -p 1883 -d
