@@ -17,7 +17,7 @@
 #include "_receive.h"
 #include "_config.h"
 
-
+#define BUTTON 33
 #define rxPin (16)
 #define txPin (17)
 
@@ -29,17 +29,16 @@ int relayPinState = HIGH;
 char myName[40];
 int x, y;
 
-
 unsigned long previousMillis = 0;
 const long interval = 500;
 unsigned int timeCount = 0;
 bool statusCar = false;
 
-
 void init_hardware()
 {
   pinMode(relayPin, OUTPUT);
   pinMode(2, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
   digitalWrite(relayPin, relayPinState);
 
   // serial port initialization
@@ -81,9 +80,17 @@ void setup()
 
 void loop()
 {
-  if (statusCar == true) {
+  if (digitalRead(BUTTON) == 0)
+  {
+    delay(200);
+    statusCar = true;
+  }
+
+  if (statusCar == true)
+  {
     unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
+    if (currentMillis - previousMillis >= interval)
+    {
       previousMillis = currentMillis;
       timeCount++;
       Serial.print(millis() / 1000);
@@ -91,10 +98,12 @@ void loop()
       Serial.println(timeCount);
       mySerial.print(String(map(timeCount, 0, 50, 0, 1000)) + "\n");
     }
-    if (timeCount >= 50) {
+    if (timeCount >= 50)
+    {
       statusCar = false;
       timeCount = 0;
     }
   }
+
   mqtt->loop();
 } // END LOOP
